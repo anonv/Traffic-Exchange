@@ -1,0 +1,33 @@
+body {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #E5E5E5;
+background-color: #000000;
+margin: 0;
+}
+
+table {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #E5E5E5;
+}
+
+b {
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #FFFFFF;
+}
+
+a
+{
+font-family: Arial, Helvetica, sans-serif;
+font-size: 11px;
+color: #4DA0C6;
+text-decoration: none;
+}
+
+a:hover
+{
+color: #4DA0C6;
+text-decoration: underline;
+}

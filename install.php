@@ -46,7 +46,7 @@ $sqlarray = array(
 
   text text,
 
-  date timestamp(14) NOT NULL,
+  date timestamp(6) NOT NULL,
 
   PRIMARY KEY  (id)
 
@@ -208,7 +208,7 @@ $sqlarray = array(
 
   paid_to varchar(150) default NULL,
 
-  cdate date default '0000-00-00',
+  cdate date default '0000-01-01',
 
   PRIMARY KEY  (id)
 
@@ -226,7 +226,7 @@ $sqlarray = array(
 
   amount float(11,2) default '0.00',
 
-  vdate date default '0000-00-00',
+  vdate date default '0000-01-01',
 
   PRIMARY KEY  (id)
 
@@ -292,7 +292,7 @@ $sqlarray = array(
 
   processor varchar(100) default NULL,
 
-  adate date default '0000-00-00',
+  adate date default '0000-01-01',
 
   expired char(3) default 'no',
 
@@ -356,7 +356,7 @@ $sqlarray = array(
 
   yearis int(4) default '0',
 
-  this_month date default '0000-00-00',
+  this_month date default '0000-01-01',
 
   month_transfer char(3) default 'no',
 
@@ -382,7 +382,7 @@ $sqlarray = array(
 
   is_from varchar(50) default '0',
 
-  adate date default '0000-00-00',
+  adate date default '0000-01-01',
 
   PRIMARY KEY  (id)
 
@@ -410,9 +410,9 @@ $sqlarray = array(
 
   amt_sent int(11) NOT NULL default '0',
 
-  date_sent date default '0000-00-00',
+  date_sent date default '0000-01-01',
 
-  date_done date default '0000-00-00',
+  date_done date default '0000-01-01',
 
   cash_click float default '0',
 
@@ -546,7 +546,7 @@ $sqlarray = array(
 
   joindate datetime default NULL,
 
-  lastmail date default '0000-00-00',
+  lastmail date default '0000-01-01',
 
   minmax int(11) default NULL,
 
@@ -570,15 +570,15 @@ $sqlarray = array(
 
   ptc_cash float default '0',
 
-  lastroi date default '0000-00-00',
+  lastroi date default '0000-01-01',
 
   lastaccess datetime default NULL,
 
-  lastsurfed datetime default '0000-00-00 00:00:00',
+  lastsurfed datetime default '0000-01-01 00:00:00',
 
   upgrade_ends date default NULL,
 
-  premregdate date default '0000-00-00',
+  premregdate date default '0000-01-01',
 
   premmp int(11) default '0',
 
@@ -620,7 +620,7 @@ $sqlarray = array(
 
 "INSERT INTO admin VALUES ('lastip', '0.0.0.0')",
 
-"INSERT INTO admin VALUES ('lstcrn', '0000-00-00')",
+"INSERT INTO admin VALUES ('lstcrn', '0000-01-01')",
 
 "INSERT INTO adminprops VALUES ('inibon', '1000')",
 
@@ -793,16 +793,12 @@ if(!isset($_POST['startinstall'])){
 	require("vars.php");
 
 
-
-	$db = @mysql_connect($db_host, $db_user, $db_pwd) or die("Unable to connect to the database server - <b>".mysql_error()."</b>.<br>Please check database settings at vars.php file or<br><br><br> <a href='install.php'>Click Here</a> to Retry.");
-
-
-
-	if(!@mysql_select_db($db_name,$db)){
-
-		exit("Unable to select the database $dbname - <b>".mysql_error()."</b>.<br>Please check database settings at vars.php file or<br><br><br> <a href='install.php'>Click Here</a> to Retry.");
-
-	}
+  $mysqli = new mysqli($db_host, $db_user, $db_pwd, $db_name);
+	// Check connection
+  if ($mysqli -> connect_errno) {
+		echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+		exit();
+		}
 
 	$installstat = true;
 
@@ -810,7 +806,7 @@ if(!isset($_POST['startinstall'])){
 
 		$t = explode(" ",$sql);
 
-		if(mysql_query($sql)){
+		if($mysqli -> query($sql)){
 
 			echo "$t[0] $t[1] $t[2] Successfull<br>";
 
